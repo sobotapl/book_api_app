@@ -2,6 +2,7 @@ package pl.coderslab;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class MockBookService implements BookService {
@@ -27,5 +28,12 @@ public class MockBookService implements BookService {
     public void addNewBook(Book book) {
         book.setId(nextId++);
         list.add(book);
+    }
+
+    @Override
+    public Optional<Book> getBookById(Long id) {
+        return list.stream()
+                .filter(item -> item.getId() == id)
+                .findFirst();
     }
 }
