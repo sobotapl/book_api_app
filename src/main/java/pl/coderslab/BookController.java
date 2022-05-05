@@ -45,8 +45,19 @@ public class BookController {
         });
     }
 
+    @DeleteMapping("/{id}")
+    public void removeBook(@PathVariable Long id) {
+        bookService.deleteBookById(id);
+    }
 
-
+    @PutMapping("")
+    public void updateBook(@RequestBody Book book) {
+        if (getBook(book.getId()) != null) {
+            bookService.updateBook(book);
+        } else {
+            throw new RestClientException("no ID on list: " + book.getId());
+        }
+    }
 
 
 
