@@ -3,9 +3,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Book;
 import pl.coderslab.service.BookService;
 
@@ -36,9 +34,29 @@ public class ManageBookController {
     @PostMapping("/add")
     public String saveBook(@Valid Book book, BindingResult result) {
         if (result.hasErrors()) {
-            return "books/add";
+            return "books-add";
         }
         bookService.addNewBook(book);
+        return "redirect:/admin/books/all";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable long id, Model model){
+        model.addAttribute("book", bookService.getBookById(id));
+        return "book-edit";
+    }
+
+    @PostMapping("/edit")
+    public String saveEditBook(@ModelAttribute("bookToEdit") @Valid Book book, BindingResult result){
+        if(result.hasErrors()){
+            return "book-edit";
+        }
+//        Book bookToEdit = bookService.getBookById(book.getId()).get();
+//        bookToEdit.setIsbn(book.getIsbn());
+//        bookToEdit.setType(book.getType());
+//        bookToEdit.setPublisher(book.getPublisher());
+//        bookToEdit.setAuthor(book.getAuthor());
+        bookService.updateBook(book);
         return "redirect:/admin/books/all";
     }
 
