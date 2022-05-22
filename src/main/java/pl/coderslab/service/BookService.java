@@ -11,6 +11,7 @@ public interface BookService {
     void addNewBook(Book book);
 
     void updateBook(Book book);
+
     void deleteBookById(long id);
 
 
