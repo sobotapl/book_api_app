@@ -21,7 +21,7 @@
       <td><c:out value="${book.author}"/></td>
       <td>
         <a href="<c:out value="/admin/books/edit/${book.id}"/>">Edytuj</a>
-        <a href="<c:out value="/admin/books/delete/${book.id}"/>">Usuń</a>
+        <a href="<c:out value="/admin/books/delete-confirm?id=${book.id}"/>">Usuń</a>
         <a href="<c:out value="/admin/books/show/${book.id}"/>">Pokaż</a>
       </td>
     </tr>

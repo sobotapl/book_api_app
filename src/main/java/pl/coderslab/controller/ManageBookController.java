@@ -54,11 +54,6 @@ public class ManageBookController {
         if(result.hasErrors()){
             return "book-edit";
         }
-//        Book bookToEdit = bookService.getBookById(book.getId()).get();
-//        bookToEdit.setIsbn(book.getIsbn());
-//        bookToEdit.setType(book.getType());
-//        bookToEdit.setPublisher(book.getPublisher());
-//        bookToEdit.setAuthor(book.getAuthor());
         bookService.updateBook(book);
         return "redirect:/admin/books/all";
     }
@@ -67,6 +62,12 @@ public class ManageBookController {
     public String deleteBook(@PathVariable long id){
         jpaBookService.deleteBookById(id);
         return "redirect:/admin/books/all";
+    }
+
+    @GetMapping("/delete-confirm")
+    public String deleteBookConfirmation(@RequestParam long id, Model model) {
+        model.addAttribute("book", bookService.getBookById(id).get());
+        return "book-delete-confirmation";
     }
 
     @GetMapping("/show/{id}")
