@@ -1,9 +1,11 @@
-package pl.coderslab;
+package pl.coderslab.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.server.ResponseStatusException;
+import pl.coderslab.service.BookService;
+import pl.coderslab.model.Book;
 
 import java.util.List;
 
