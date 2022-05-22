@@ -6,7 +6,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Book;
 import pl.coderslab.service.BookService;
+import pl.coderslab.service.JpaBookService;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import java.util.List;
 public class ManageBookController {
 
     private final BookService bookService;
+    private final JpaBookService jpaBookService;
 
 
     @GetMapping("/all")
@@ -59,6 +62,19 @@ public class ManageBookController {
         bookService.updateBook(book);
         return "redirect:/admin/books/all";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBook(@PathVariable long id){
+        jpaBookService.deleteBookById(id);
+        return "redirect:/admin/books/all";
+    }
+
+    @GetMapping("/show/{id}")
+    public String showBook(Model model, @PathVariable long id) {
+        model.addAttribute("book", bookService.getBookById(id).orElseThrow(EntityNotFoundException::new));
+        return "book-details";
+    }
+
 
 
 }
